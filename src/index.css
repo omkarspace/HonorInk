@@ -4,23 +4,42 @@
 
 @layer base {
   body {
-    @apply antialiased text-gray-900;
+    @apply bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900 min-h-screen;
   }
 }
 
 @layer components {
-  .btn {
-    @apply inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500;
+  .glass-card {
+    @apply bg-white/10 backdrop-blur-md border border-white/20 shadow-xl;
   }
   
-  .btn-secondary {
-    @apply inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500;
+  .input-field {
+    @apply w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl 
+           text-white placeholder-gray-400 backdrop-blur-sm
+           focus:ring-2 focus:ring-blue-500/50 focus:border-transparent
+           transition duration-300;
+  }
+
+  .btn-primary {
+    @apply py-4 px-6 bg-gradient-to-r from-blue-600 to-purple-600
+           hover:from-blue-700 hover:to-purple-700 text-white rounded-xl
+           transform hover:scale-105 transition duration-300
+           shadow-lg hover:shadow-blue-500/25;
+  }
+
+  .certificate-container {
+    @apply bg-white p-12 rounded-2xl shadow-2xl transform hover:scale-[1.02] 
+           transition duration-500 cursor-pointer;
   }
 }
 
-@layer utilities {
-  .certificate-shadow {
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1),
-                0 0 30px rgba(0, 0, 0, 0.05);
-  }
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient 8s linear infinite;
+}
+
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
