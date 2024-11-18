@@ -26,14 +26,43 @@ const UdemyCertificate = () => {
 
   const downloadPDF = () => {
     const element = document.getElementById('certificate');
+    
     const opt = {
-      margin: 1,
-      filename: 'udemy-certificate.pdf',
-      image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { scale: 2 },
-      jsPDF: { unit: 'px', format: 'a4', orientation: 'landscape' }
+      margin: 0,
+      filename: `udemy-certificate-${certificate.certId}.pdf`,
+      image: { type: 'jpeg', quality: 1 },
+      html2canvas: {
+        scale: 4,
+        useCORS: true,
+        letterRendering: true,
+        windowWidth: 1920,
+        dpi: 300,
+        logging: false,
+        removeContainer: true
+      },
+      jsPDF: {
+        unit: 'mm',
+        format: 'a4',
+        orientation: 'landscape',
+        compress: true,
+        precision: 16,
+        putOnlyUsedFonts: true
+      },
+      pagebreak: { mode: 'avoid-all' }
     };
-    html2pdf().set(opt).from(element).save();
+
+    const downloadBtn = document.getElementById('downloadBtn');
+    downloadBtn.disabled = true;
+    downloadBtn.innerText = 'Generating PDF...';
+
+    html2pdf()
+      .from(element)
+      .set(opt)
+      .save()
+      .then(() => {
+        downloadBtn.disabled = false;
+        downloadBtn.innerText = 'Download Certificate';
+      });
   };
 
   return (
@@ -49,37 +78,44 @@ const UdemyCertificate = () => {
           <CertificateForm onSubmit={handleSubmit} fields={fields} platform="Udemy" />
         ) : (
           <div className="space-y-6">
-            <div id="certificate" className="certificate-container">
-              <div className="flex justify-between items-start mb-12">
-                <img src="/udemy-logo.png" alt="Udemy" className="h-12" />
-                <div className="text-right text-sm text-gray-600">
-                  <div>Certificate no: {certificate.certId}</div>
-                  <div>Certificate url: ude.my/{certificate.certId}</div>
+            <div id="certificate" className="certificate-container bg-white w-[1056px] h-[748px] mx-auto">
+              <div className="p-16 h-full flex flex-col">
+                <div className="flex justify-between items-start mb-12">
+                  <img src="/udemy-logo.png" alt="Udemy" className="h-14 object-contain" />
+                  <div className="text-right text-sm text-gray-600">
+                    <div className="font-medium">Certificate no: {certificate.certId}</div>
+                    <div>Certificate url: ude.my/{certificate.certId}</div>
+                  </div>
                 </div>
-              </div>
-              
-              <div className="text-center mb-16">
-                <h3 className="text-3xl font-bold text-gray-800 mb-6">CERTIFICATE OF COMPLETION</h3>
-                <h1 className="text-5xl font-bold text-gray-900 mb-8 leading-tight">{certificate.courseName}</h1>
-                <p className="text-2xl text-gray-700">
-                  Instructor: {certificate.instructor}
-                </p>
-              </div>
-              
-              <div className="text-center">
-                <h2 className="text-4xl font-bold text-gray-900 mb-6">
-                  {certificate.firstName} {certificate.lastName}
-                </h2>
-                <p className="text-xl text-gray-700 mb-3">
-                  Completed on {certificate.completionDate}
-                </p>
-                <p className="text-xl text-gray-700">
-                  {certificate.courseLength} total hours
-                </p>
+                
+                <div className="text-center flex-grow flex flex-col justify-center">
+                  <h3 className="text-3xl font-bold text-gray-800 mb-6 tracking-wide">
+                    CERTIFICATE OF COMPLETION
+                  </h3>
+                  <h1 className="text-5xl font-bold text-gray-900 mb-8 leading-tight max-w-4xl mx-auto">
+                    {certificate.courseName}
+                  </h1>
+                  <p className="text-2xl text-gray-700 mb-12">
+                    Instructor: {certificate.instructor}
+                  </p>
+                  
+                  <div className="mt-auto">
+                    <h2 className="text-4xl font-bold text-gray-900 mb-6">
+                      {certificate.firstName} {certificate.lastName}
+                    </h2>
+                    <p className="text-xl text-gray-700 mb-3">
+                      Completed on {certificate.completionDate}
+                    </p>
+                    <p className="text-xl text-gray-700">
+                      {certificate.courseLength} total hours
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
 
             <button
+              id="downloadBtn"
               onClick={downloadPDF}
               className="btn-primary w-full max-w-md mx-auto block"
             >

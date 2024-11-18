@@ -25,14 +25,43 @@ const LinkedInCertificate = () => {
 
   const downloadPDF = () => {
     const element = document.getElementById('certificate');
+    
     const opt = {
-      margin: 1,
-      filename: 'linkedin-certificate.pdf',
-      image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { scale: 2 },
-      jsPDF: { unit: 'px', format: 'a4', orientation: 'landscape' }
+      margin: 0,
+      filename: `linkedin-certificate-${certificate.certId}.pdf`,
+      image: { type: 'jpeg', quality: 1 },
+      html2canvas: {
+        scale: 4,
+        useCORS: true,
+        letterRendering: true,
+        windowWidth: 1920,
+        dpi: 300,
+        logging: false,
+        removeContainer: true
+      },
+      jsPDF: {
+        unit: 'mm',
+        format: 'a4',
+        orientation: 'landscape',
+        compress: true,
+        precision: 16,
+        putOnlyUsedFonts: true
+      },
+      pagebreak: { mode: 'avoid-all' }
     };
-    html2pdf().set(opt).from(element).save();
+
+    const downloadBtn = document.getElementById('downloadBtn');
+    downloadBtn.disabled = true;
+    downloadBtn.innerText = 'Generating PDF...';
+
+    html2pdf()
+      .from(element)
+      .set(opt)
+      .save()
+      .then(() => {
+        downloadBtn.disabled = false;
+        downloadBtn.innerText = 'Download Certificate';
+      });
   };
 
   return (
@@ -48,39 +77,42 @@ const LinkedInCertificate = () => {
           <CertificateForm onSubmit={handleSubmit} fields={fields} platform="LinkedIn" />
         ) : (
           <div className="space-y-6">
-            <div id="certificate" className="certificate-container">
-              <div className="border-8 border-gray-200 p-12">
-                <div className="flex justify-between items-start mb-12">
-                  <img src="/linkedin-learning.png" alt="LinkedIn Learning" className="h-10" />
-                  <div className="text-sm text-gray-600">
-                    Certificate ID: {certificate.certId}
+            <div id="certificate" className="certificate-container bg-white w-[1056px] h-[748px] mx-auto">
+              <div className="border-[16px] border-gray-200 h-full">
+                <div className="p-16 h-full flex flex-col">
+                  <div className="flex justify-between items-start mb-12">
+                    <img src="/linkedin-learning.png" alt="LinkedIn Learning" className="h-12 object-contain" />
+                    <div className="text-sm text-gray-600 font-medium">
+                      Certificate ID: {certificate.certId}
+                    </div>
                   </div>
-                </div>
-                
-                <div className="text-center mb-16">
-                  <h2 className="text-4xl font-bold text-gray-800 mb-6">Certificate of Completion</h2>
-                  <h3 className="text-2xl text-gray-700 mb-10">
-                    Congratulations, {certificate.firstName} {certificate.lastName}
-                  </h3>
-                  <h1 className="text-5xl font-bold text-gray-900 mb-8 leading-tight">
-                    {certificate.courseName}
-                  </h1>
-                  <div className="text-xl text-gray-700 space-y-2">
-                    <p>Course completed on {certificate.completionDate}</p>
-                    <p>{certificate.courseLength}</p>
+                  
+                  <div className="text-center flex-grow flex flex-col justify-center">
+                    <h2 className="text-4xl font-bold text-gray-800 mb-6">Certificate of Completion</h2>
+                    <h3 className="text-2xl text-gray-700 mb-10">
+                      Congratulations, {certificate.firstName} {certificate.lastName}
+                    </h3>
+                    <h1 className="text-5xl font-bold text-gray-900 mb-8 leading-tight max-w-4xl mx-auto">
+                      {certificate.courseName}
+                    </h1>
+                    <div className="text-xl text-gray-700 space-y-2">
+                      <p>Course completed on {certificate.completionDate}</p>
+                      <p>{certificate.courseLength}</p>
+                    </div>
+                    
+                    <div className="text-gray-700 mt-12 max-w-2xl mx-auto">
+                      <p className="text-center text-lg italic">
+                        By continuing to learn, you have expanded your perspective, sharpened your skills, 
+                        and made yourself even more in demand.
+                      </p>
+                    </div>
                   </div>
-                </div>
-                
-                <div className="text-gray-700 mt-12 max-w-2xl mx-auto">
-                  <p className="text-center text-lg italic">
-                    By continuing to learn, you have expanded your perspective, sharpened your skills, 
-                    and made yourself even more in demand.
-                  </p>
                 </div>
               </div>
             </div>
 
             <button
+              id="downloadBtn"
               onClick={downloadPDF}
               className="btn-primary w-full max-w-md mx-auto block"
             >
