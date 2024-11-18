@@ -112,52 +112,50 @@ const UdemyCertificate = () => {
           <div className="space-y-6">
             <div
               id="certificate"
-              className="relative bg-[#F8F9FB] w-[1056px] h-[748px] mx-auto shadow-lg"
+              className="relative bg-[#ffffff] w-[1056px] h-[748px] mx-auto shadow-lg"
             >
-              <div className="p-12 h-full flex flex-col">
-                <div className="flex justify-between items-start mb-16">
-                  <img
-                    src="/udemy_logo.png"
-                    alt="Udemy"
-                    className="h-12"
-                  />
-                  <div className="text-right text-sm text-[#6A6F73]">
-                    <div>Certificate no: {certificate.certId}</div>
-                    <div>Certificate url: ude.my/{certificate.certId}</div>
-                    <div>Reference Number: 0004</div>
+              <div>
+                <div className="p-12 h-full flex flex-col">
+                  <div className="flex justify-between items-start mb-16">
+                    <img src="/udemy_logo.png" alt="Udemy" className="h-12" />
+                    <div className="text-right text-sm text-[#6A6F73]">
+                      <div>Certificate no: {certificate.certId}</div>
+                      <div>Certificate url: ude.my/{certificate.certId}</div>
+                      <div>Reference Number: 0004</div>
+                    </div>
                   </div>
-                </div>
 
-                <div className="text-left flex-grow flex flex-col">
-                  <h3 className="text-lg font-bold text-[#6A6F73] mb-8 tracking-wider">
-                    CERTIFICATE OF COMPLETION
-                  </h3>
-                  <h1 className="text-[52px] font-bold text-[#1C1D1F] mb-6 leading-tight max-w-4xl">
-                    {certificate.courseName}
-                  </h1>
-                  <p className="text-lg text-[#1C1D1F]">
-                    Instructors{" "}
-                    <span className="font-bold">
-                      {certificate.instructor}
-                    </span>
-                  </p>
-
-                  <div className="mt-auto pt-32">
-                    <h2 className="text-5xl font-bold text-[#1C1D1F] mb-6">
-                      {certificate.firstName} {certificate.lastName}
-                    </h2>
-                    <p className="text-lg text-[#1C1D1F] mb-3">
-                      Date{" "}
-                      <span className="font-bold ml-2">
-                        {formatDate(certificate.completionDate)}
+                  <div className="text-left flex-grow flex flex-col">
+                    <h3 className="text-lg font-bold text-[#6A6F73] mb-8 tracking-wider">
+                      CERTIFICATE OF COMPLETION
+                    </h3>
+                    <h1 className="  text-[52px]  text-[#1C1D1F] mb-6 leading-tight max-w-4xl ">
+                      {certificate.courseName}
+                    </h1>
+                    <p className=" text-lg text-[#1C1D1F]">
+                      Instructors{" "}
+                      <span className=" font-bold">
+                        {certificate.instructor}
                       </span>
                     </p>
-                    <p className="text-lg text-[#1C1D1F]">
-                      Length{" "}
-                      <span className="font-bold ml-2">
-                        {certificate.courseLength} total hours
-                      </span>
-                    </p>
+
+                    <div className="mt-auto pt-32">
+                      <h2 className="text-5xl font-bold text-[#1C1D1F] mb-6">
+                        {certificate.firstName} {certificate.lastName}
+                      </h2>
+                      <p className="text-lg text-[#1C1D1F] mb-3">
+                        Date{" "}
+                        <span className="font-bold ml-2">
+                          {formatDate(certificate.completionDate)}
+                        </span>
+                      </p>
+                      <p className="text-lg text-[#1C1D1F]">
+                        Length{" "}
+                        <span className="font-bold ml-2">
+                          {certificate.courseLength} total hours
+                        </span>
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
