@@ -144,14 +144,16 @@ const LinkedInCertificate = () => {
             <div
               id="certificate"
               className="certificate-container bg-white w-[1056px] h-[748px] mx-auto"
+              
             >
+              
               <div className="border-[16px]  border-gray-200 h-full">
                 <div className="p-16 h-full  flex flex-col">
                   <div className="flex justify-center items-start ">
                     <img
                       src="/linkedin-learning.png"
                       alt="LinkedIn Learning"
-                      className="h-11 object-contain"
+                      className="h-12 object-contain"
                     />
                   </div>
 
