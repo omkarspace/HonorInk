@@ -84,7 +84,7 @@ const UdemyCertificate = () => {
     <div className="min-h-screen p-6 bg-gray-100">
       <Link
         to="/"
-        className="fixed top-6 left-6 text-white hover:text-blue-400 transition duration-300"
+        className="fixed top-6 left-6 text-gray-600 hover:text-blue-400 transition duration-300"
       >
         <svg
           className="w-6 h-6"
@@ -111,55 +111,58 @@ const UdemyCertificate = () => {
         ) : (
           <div className="space-y-6">
             <div
-              id="certificate"
-              className="relative bg-[#ffffff] w-[1056px] h-[748px] mx-auto shadow-lg"
-            >
-              <div>
-                <div className="p-12 h-full flex flex-col">
-                  <div className="flex justify-between items-start mb-16">
-                    <img src="/udemy_logo.png" alt="Udemy" className="h-12" />
-                    <div className="text-right text-sm text-[#6A6F73]">
-                      <div>Certificate no: {certificate.certId}</div>
-                      <div>Certificate url: ude.my/{certificate.certId}</div>
-                      <div>Reference Number: 0004</div>
-                    </div>
-                  </div>
+  id="certificate"
+  className="bg-[#FBF9FA] w-full max-w-[1056px] aspect-w-16 aspect-h-9 mx-auto "
+>
+  <div className="relative h-full">
+    {/* Border Pattern */}
+    <div className="absolute inset-0 border-[24px] border-[#ffffff]" />
+    <div>
+      <div className="p-4 sm:p-8 lg:p-12 h-full flex flex-col">
+        <div className="flex justify-between mt-4 sm:mt-8 items-start mb-8 sm:mb-16">
+          <img src="/udemy_logo.png" alt="Udemy" className="h-8 sm:h-12 ml-2" />
+          <div className="text-right text-xs sm:text-sm text-[#6A6F73]">
+            <div>Certificate no: {certificate.certId}</div>
+            <div>Certificate url: ude.my/{certificate.certId}</div>
+            <div>Reference Number: 0004</div>
+          </div>
+        </div>
 
-                  <div className="text-left flex-grow flex flex-col">
-                    <h3 className="text-lg font-bold text-[#6A6F73] mb-8 tracking-wider">
-                      CERTIFICATE OF COMPLETION
-                    </h3>
-                    <h1 className="  text-[52px]  text-[#1C1D1F] mb-6 leading-tight max-w-4xl ">
+        <div className="text-left flex-grow flex flex-col">
+          <h3 className="text-sm sm:text-lg font-bold text-[#6A6F73]   tracking-wider">
+            CERTIFICATE OF COMPLETION
+          </h3>
+          <h1 className=" certificate-name text-8xl  text-[#1C1D1F]  leading-tight max-w-4xl ">
                       {certificate.courseName}
                     </h1>
-                    <p className=" text-lg text-[#1C1D1F]">
-                      Instructors{" "}
-                      <span className=" font-bold">
-                        {certificate.instructor}
-                      </span>
-                    </p>
+          <p className="text-sm sm:text-lg text-[#1C1D1F]">
+            Instructors{" "}
+            <span className="font-bold">{certificate.instructor}</span>
+          </p>
 
-                    <div className="mt-auto pt-32">
-                      <h2 className="text-5xl font-bold text-[#1C1D1F] mb-6">
-                        {certificate.firstName} {certificate.lastName}
-                      </h2>
-                      <p className="text-lg text-[#1C1D1F] mb-3">
-                        Date{" "}
-                        <span className="font-bold ml-2">
-                          {formatDate(certificate.completionDate)}
-                        </span>
-                      </p>
-                      <p className="text-lg text-[#1C1D1F]">
-                        Length{" "}
-                        <span className="font-bold ml-2">
-                          {certificate.courseLength} total hours
-                        </span>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+          <div className="mt-auto pt-16 sm:pt-32">
+            <h2 className="text-3xl sm:text-5xl font-bold text-[#1C1D1F] mb-4 sm:mb-6">
+              {certificate.firstName} {certificate.lastName}
+            </h2>
+            <p className="text-sm sm:text-lg text-[#1C1D1F] mb-2 sm:mb-3">
+              Date{" "}
+              <span className="font-bold ml-2">
+                {formatDate(certificate.completionDate)}
+              </span>
+            </p>
+            <p className="text-sm sm:text-lg text-[#1C1D1F]">
+              Length{" "}
+              <span className="font-bold ml-2">
+                {certificate.courseLength} total hours
+              </span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 
             <button
               id="downloadBtn"
