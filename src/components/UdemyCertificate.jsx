@@ -127,9 +127,22 @@ const UdemyCertificate = () => {
                       className="h-12 sm:h-15 "
                     />
                     <div className="text-right text-xs sm:text-sm text-[#908E8D]">
-                      <div>Certificate No: <span className="font-semibold">{certificate.certId}</span></div>
-                      <div>Certificate URL: <span className="font-semibold">ude.my/{certificate.certId}</span></div>
-                      <div>Reference Number: <span className="font-semibold">0004</span></div>
+                      <div>
+                        Certificate No:{" "}
+                        <span className="font-semibold">
+                          {certificate.certId}
+                        </span>
+                      </div>
+                      <div>
+                        Certificate URL:{" "}
+                        <span className="font-semibold">
+                          ude.my/{certificate.certId}
+                        </span>
+                      </div>
+                      <div>
+                        Reference Number:{" "}
+                        <span className="font-semibold">0004</span>
+                      </div>
                     </div>
                   </div>
 
@@ -143,7 +156,9 @@ const UdemyCertificate = () => {
                     </h1>
                     <p className="text-sm sm:text-lg text-[#1C181A] mt-4">
                       Instructors:{" "}
-                      <span className="font-bold">{certificate.instructor}</span>
+                      <span className="font-bold">
+                        {certificate.instructor}
+                      </span>
                     </p>
 
                     {/* Footer */}
