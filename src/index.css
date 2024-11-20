@@ -2,47 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  body {
-    @apply bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900 min-h-screen;
-  }
-}
-
-@layer components {
-  .glass-card {
-    @apply bg-white/10 backdrop-blur-md border border-white/20 shadow-xl;
-  }
-  
-  .input-field {
-    @apply w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl 
-           text-white placeholder-gray-400 backdrop-blur-sm
-           focus:ring-2 focus:ring-blue-500/50 focus:border-transparent
-           transition duration-300;
-  }
-
-  .btn-primary {
-    @apply py-4 px-6 bg-gradient-to-r from-blue-600 to-purple-600
-           hover:from-blue-700 hover:to-purple-700 text-white rounded-xl
-           transform hover:scale-105 transition duration-300
-           shadow-lg hover:shadow-blue-500/25;
-  }
-
-  .certificate-container {
-    @apply bg-white p-12 rounded-2xl shadow-2xl transform hover:scale-[1.02] 
-           transition duration-500 cursor-pointer;
-  }
-}
-
-.animate-gradient {
-  background-size: 200% 200%;
-  animation: gradient 8s linear infinite;
-}
-
-@keyframes gradient {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
 
 .certificate-name {
   font-family: 'Crimson Pro', serif;

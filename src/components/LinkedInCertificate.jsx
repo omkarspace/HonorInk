@@ -47,7 +47,7 @@ const LinkedInCertificate = () => {
       name: "skillCovered",
       label: "Skill Covered in Course",
       type: "text",
-      placeholder: "e.g., Python , React.js ",
+      placeholder: "e.g., Python, React.js",
     },
   ];
 
@@ -112,10 +112,10 @@ const LinkedInCertificate = () => {
   };
 
   return (
-    <div className="min-h-screen p-6">
+    <div className="min-h-screen p-6 bg-gray-100">
       <Link
         to="/"
-        className="fixed top-6 left-6 text-white hover:text-blue-400 transition duration-300"
+        className="fixed top-6 left-6 text-blue-600 hover:text-blue-400 transition duration-300"
       >
         <svg
           className="w-6 h-6"
@@ -143,60 +143,49 @@ const LinkedInCertificate = () => {
           <div className="space-y-6">
             <div
               id="certificate"
-              className="certificate-container bg-white w-[1056px] h-[748px] mx-auto"
-              
+              className="certificate-container bg-white w-[1056px] h-[748px] mx-auto rounded-lg shadow-lg overflow-hidden"
+              style={{
+                backgroundImage: 'url("/linkedin_background.png")',
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+              }}
             >
-              
-              <div className="border-[16px]  border-gray-200 h-full">
-                <div className="p-16 h-full  flex flex-col">
-                  <div className="flex justify-center items-start ">
-                    <img
-                      src="/linkedin-learning.png"
-                      alt="LinkedIn Learning"
-                      className="h-12 object-contain"
-                    />
-                  </div>
-
-                  <h1 className="text-5xl font-thin text-gray-900 text-center  max-w-4xl ">
+              <div className="inner-white-space bg-white w-full h-full flex items-center justify-center p-8">
+                <div className="text-center">
+                  <img
+                    src="/linkedin-learning.png"
+                    alt="LinkedIn Learning"
+                    className="h-12 mb-6 mx-auto"
+                  />
+                  <h1 className="text-5xl font-serif font-bold text-gray-800 mb-4">
                     {certificate.courseName}
                   </h1>
-
-                  <div className="text-center flex flex-col ">
-                    <h2 className="text-2xl text-gray-700 mt-10">
-                      Course completed by {certificate.firstName}{" "}
-                      {certificate.lastName}
-                    </h2>
-
-                    <div className="text-xl text-center text-gray-700  ">
-                      <p className="text-2xl text-gray-700 mb-10">
-                        <span className="mr-2">
-                          {formatDate(certificate.completionDate)}
-                        </span>
-                        <span className="mt-1">
-                          at {certificate.courseCompleteTime} UTC
-                        </span>
-                        <span className="ml-1">•</span>
-
-                        <span className="ml-1">{certificate.courseLength}</span>
-                      </p>
-                    </div>
-
-                    <div className="text-gray-700 mt-5  ">
-                      <p className=" text-2xl text-gray-700 mb-10 text-center ">
-                        Top skills covered
-                      </p>
-                      <div className="parent flex justify-center">
-                        <div className="start flex items-center gap-3 sm:gap-5">
-                          <div className="items-center sm:px-5 sm:py-2 border-[2px] border-zinc-900 font-light text-sm sm:text-md uppercase rounded-full">
-                            {certificate.skillCovered}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="text-sm text-gray-600 font-medium">
-                      Certificate ID: {certificate.certId}
-                    </div>
-                  </div>
+                  <h2 className="text-xl font-light text-gray-600 mb-6">
+                    This certifies that{" "}
+                    <span className="font-semibold">
+                      {certificate.firstName} {certificate.lastName}
+                    </span>{" "}
+                    has successfully completed the course.
+                  </h2>
+                  <p className="text-gray-500 text-lg mb-4">
+                    Completed on:{" "}
+                    <span className="text-gray-700 font-medium">
+                      {formatDate(certificate.completionDate)}
+                    </span>{" "}
+                    at {certificate.courseCompleteTime} UTC
+                  </p>
+                  <p className="text-gray-500 text-lg mb-8">
+                    Duration:{" "}
+                    <span className="text-gray-700 font-medium">
+                      {certificate.courseLength}
+                    </span>
+                  </p>
+                  <p className="text-gray-600 mb-4">
+                    <strong>Skills Covered:</strong> {certificate.skillCovered}
+                  </p>
+                  <p className="text-gray-400 text-sm">
+                    Certificate ID: {certificate.certId}
+                  </p>
                 </div>
               </div>
             </div>
@@ -204,7 +193,7 @@ const LinkedInCertificate = () => {
             <button
               id="downloadBtn"
               onClick={downloadPDF}
-              className="btn-primary w-full max-w-md mx-auto block"
+              className="px-6 py-3 bg-blue-600 text-white text-lg font-medium rounded-lg shadow-lg hover:bg-blue-700 transition duration-300 mx-auto block"
             >
               Download Certificate
             </button>
