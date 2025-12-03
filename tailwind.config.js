@@ -1,19 +1,13 @@
-<<<<<<< HEAD
 import tailwindcssAnimate from "tailwindcss-animate";
 
 /** @type {import('tailwindcss').Config} */
 export default {
   darkMode: ["class"],
-=======
-/** @type {import('tailwindcss').Config} */
-export default {
->>>>>>> e501412cee8a8d731fef59835af1ee644c96d280
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-<<<<<<< HEAD
     container: {
       center: true,
       padding: "2rem",
@@ -120,9 +114,3 @@ export default {
   },
   plugins: [tailwindcssAnimate],
 }
-=======
-    extend: {},
-  },
-  plugins: [],
-}
->>>>>>> e501412cee8a8d731fef59835af1ee644c96d280

@@ -1,10 +1,5 @@
 {
-<<<<<<< HEAD
   "name": "honorink",
-=======
-<<<<<<< HEAD
-  "name": "vite-react-starter",
->>>>>>> e501412cee8a8d731fef59835af1ee644c96d280
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -12,7 +7,6 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-<<<<<<< HEAD
     "preview": "vite preview",
     "test": "vitest"
   },
@@ -30,25 +24,11 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.15.0",
-=======
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "html2pdf.js": "^0.10.1",
-    "lucide-react": "^0.460.0",
-    "new-folder": "file:..",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-router-dom": "^6.22.3"
-  },
-  "devDependencies": {
->>>>>>> e501412cee8a8d731fef59835af1ee644c96d280
     "@types/react": "^18.3.5",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.1",
     "autoprefixer": "^10.4.18",
     "eslint": "^9.9.1",
-<<<<<<< HEAD
     "eslint-plugin-react": "^7.37.2",
     "eslint-plugin-react-hooks": "^5.0.0",
     "eslint-plugin-react-refresh": "^0.4.16",
@@ -59,21 +39,5 @@
     "tailwindcss-animate": "^1.0.7",
     "vite": "^5.4.2",
     "vitest": "^2.1.4"
-=======
-    "postcss": "^8.4.35",
-    "tailwindcss": "^3.4.1",
-    "vite": "^5.4.2"
-=======
-  "name": "new-folder",
-  "version": "1.0.0",
-  "description": "",
-  "license": "ISC",
-  "author": "",
-  "type": "commonjs",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
->>>>>>> aaf4dbb (feat: add Navbar, NotFound page, and route-based code splitting)
->>>>>>> e501412cee8a8d731fef59835af1ee644c96d280
   }
 }
