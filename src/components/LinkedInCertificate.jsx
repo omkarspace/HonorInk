@@ -1,13 +1,19 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+<<<<<<< HEAD
 import { Loader } from "lucide-react";
+=======
+>>>>>>> e501412cee8a8d731fef59835af1ee644c96d280
 import CertificateForm from "./CertificateForm";
 import html2pdf from "html2pdf.js";
 
 const LinkedInCertificate = () => {
   const [certificate, setCertificate] = useState(null);
+<<<<<<< HEAD
   const [isPreview, setIsPreview] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
+=======
+>>>>>>> e501412cee8a8d731fef59835af1ee644c96d280
 
   const fields = [
     {
@@ -61,6 +67,7 @@ const LinkedInCertificate = () => {
   const handleSubmit = (data) => {
     const certId = generateCertificateId();
     setCertificate({ ...data, certId });
+<<<<<<< HEAD
     setIsPreview(true);
   };
 
@@ -71,6 +78,8 @@ const LinkedInCertificate = () => {
   const resetForm = () => {
     setCertificate(null);
     setIsPreview(false);
+=======
+>>>>>>> e501412cee8a8d731fef59835af1ee644c96d280
   };
 
   const downloadPDF = () => {
@@ -100,18 +109,29 @@ const LinkedInCertificate = () => {
       pagebreak: { mode: "avoid-all" },
     };
 
+<<<<<<< HEAD
     setIsGenerating(true);
+=======
+    const downloadBtn = document.getElementById("downloadBtn");
+    downloadBtn.disabled = true;
+    downloadBtn.innerText = "Generating PDF...";
+>>>>>>> e501412cee8a8d731fef59835af1ee644c96d280
 
     html2pdf()
       .from(element)
       .set(opt)
       .save()
       .then(() => {
+<<<<<<< HEAD
         setIsGenerating(false);
       })
       .catch((error) => {
         console.error("PDF generation failed:", error);
         setIsGenerating(false);
+=======
+        downloadBtn.disabled = false;
+        downloadBtn.innerText = "Download Certificate";
+>>>>>>> e501412cee8a8d731fef59835af1ee644c96d280
       });
   };
 
@@ -154,16 +174,24 @@ const LinkedInCertificate = () => {
             platform="LinkedIn"
           />
         ) : (
+<<<<<<< HEAD
           <div className="space-y-8">
             <div
               id="certificate"
               className="certificate-container bg-white w-full max-w-[1056px] aspect-w-16 aspect-h-9 mx-auto rounded-lg shadow-lg overflow-hidden"
+=======
+          <div className="space-y-6">
+            <div
+              id="certificate"
+              className="certificate-container bg-white w-[1056px] h-[748px] mx-auto rounded-lg shadow-lg overflow-hidden"
+>>>>>>> e501412cee8a8d731fef59835af1ee644c96d280
               style={{
                 backgroundImage: 'url("/linkedin_background.png")',
                 backgroundSize: "cover",
                 backgroundPosition: "center",
               }}
             >
+<<<<<<< HEAD
               <div className="inner-white-space bg-white w-full h-full flex items-center justify-center p-6 sm:p-8 lg:p-12">
                 <div className="text-center max-w-4xl">
                   <img
@@ -175,12 +203,26 @@ const LinkedInCertificate = () => {
                     {certificate.courseName}
                   </h1>
                   <h2 className="text-lg sm:text-xl lg:text-2xl font-light text-gray-600 mb-4 sm:mb-6 lg:mb-8 leading-relaxed px-4 sm:px-6">
+=======
+              <div className="inner-white-space bg-white w-full h-full flex items-center justify-center p-8">
+                <div className="text-center">
+                  <img
+                    src="/linkedin-learning.png"
+                    alt="LinkedIn Learning"
+                    className="h-12 mb-6 mx-auto"
+                  />
+                  <h1 className="text-5xl font-serif font-bold text-gray-800 mb-4">
+                    {certificate.courseName}
+                  </h1>
+                  <h2 className="text-xl font-light text-gray-600 mb-6">
+>>>>>>> e501412cee8a8d731fef59835af1ee644c96d280
                     This certifies that{" "}
                     <span className="font-semibold">
                       {certificate.firstName} {certificate.lastName}
                     </span>{" "}
                     has successfully completed the course.
                   </h2>
+<<<<<<< HEAD
                   <div className="space-y-2 sm:space-y-3 mb-4 sm:mb-6 lg:mb-8">
                     <p className="text-gray-500 text-base sm:text-lg lg:text-xl">
                       Completed on:{" "}
@@ -200,12 +242,32 @@ const LinkedInCertificate = () => {
                     Skills Covered: {certificate.skillCovered}
                   </p>
                   <p className="text-gray-400 text-sm sm:text-base lg:text-lg">
+=======
+                  <p className="text-gray-500 text-lg mb-4">
+                    Completed on:{" "}
+                    <span className="text-gray-700 font-medium">
+                      {formatDate(certificate.completionDate)}
+                    </span>{" "}
+                    at {certificate.courseCompleteTime} UTC
+                  </p>
+                  <p className="text-gray-500 text-lg mb-8">
+                    Duration:{" "}
+                    <span className="text-gray-700 font-medium">
+                      {certificate.courseLength}
+                    </span>
+                  </p>
+                  <p className="text-gray-600 mb-4">
+                    <strong>Skills Covered:</strong> {certificate.skillCovered}
+                  </p>
+                  <p className="text-gray-400 text-sm">
+>>>>>>> e501412cee8a8d731fef59835af1ee644c96d280
                     Certificate ID: {certificate.certId}
                   </p>
                 </div>
               </div>
             </div>
 
+<<<<<<< HEAD
             {/* Action Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               {isPreview && (
@@ -237,6 +299,15 @@ const LinkedInCertificate = () => {
                 Create New Certificate
               </button>
             </div>
+=======
+            <button
+              id="downloadBtn"
+              onClick={downloadPDF}
+              className="px-6 py-3 bg-blue-600 text-white text-lg font-medium rounded-lg shadow-lg hover:bg-blue-700 transition duration-300 mx-auto block"
+            >
+              Download Certificate
+            </button>
+>>>>>>> e501412cee8a8d731fef59835af1ee644c96d280
           </div>
         )}
       </div>

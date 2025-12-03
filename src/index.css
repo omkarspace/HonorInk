@@ -1,9 +1,13 @@
+<<<<<<< HEAD
 @import url('https://fonts.googleapis.com/css2?family=Alexandria:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
+=======
+>>>>>>> e501412cee8a8d731fef59835af1ee644c96d280
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+<<<<<<< HEAD
 @layer base {
   :root {
     --background: 0 0% 97.6471%;
@@ -184,3 +188,10 @@
 .certificate-name {
   font-family: var(--font-serif);
 }
+=======
+
+.certificate-name {
+  font-family: 'Crimson Pro', serif;
+}
+
+>>>>>>> e501412cee8a8d731fef59835af1ee644c96d280
