@@ -2,8 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Loader } from "lucide-react";
 import CertificateForm from "./CertificateForm";
-import html2pdf from "html2pdf.js";
-import { generateCertificateId } from "@/lib/utils";
+import { generateCertificateId, formatCertificateDate, exportToPDF, logger } from "@/lib/utils";
 import { CERTIFICATE_ID_PREFIX } from "@/lib/constants";
 import SEO, { seoConfig } from "./SEO";
 
@@ -18,37 +17,37 @@ const CourseraCertificate = () => {
       name: "firstName",
       label: "First Name",
       type: "text",
-      placeholder: "Enter your first name",
+      placeholder: "e.g., John",
     },
     {
       name: "lastName",
       label: "Last Name",
       type: "text",
-      placeholder: "Enter your last name",
+      placeholder: "e.g., Doe",
     },
     {
       name: "completionDate",
       label: "Completion Date",
       type: "date",
-      placeholder: "e.g., January 25, 2024",
+      placeholder: "When did you complete the course?",
     },
     {
       name: "courseLength",
       label: "Course Length (weeks)",
       type: "number",
-      placeholder: "e.g., 4",
+      placeholder: "e.g., 4 (how long was the course?)",
     },
     {
       name: "courseName",
       label: "Course Name",
       type: "textarea",
-      placeholder: "Enter the course name",
+      placeholder: "e.g., Machine Learning Specialization",
     },
     {
       name: "instructor",
       label: "Instructor Name",
       type: "text",
-      placeholder: "Enter instructor name",
+      placeholder: "e.g., Andrew Ng",
     },
   ];
 
@@ -68,59 +67,16 @@ const CourseraCertificate = () => {
   };
 
   const downloadPDF = () => {
-    const element = document.getElementById("certificate");
-    if (!element) {
-      console.error("Certificate element not found!");
-      return;
-    }
-
-    const opt = {
-      margin: 0,
-      filename: `coursera-certificate-${certificate.certId}.pdf`,
-      image: { type: "jpeg", quality: 1 },
-      html2canvas: {
-        scale: 2,
-        useCORS: true,
-        letterRendering: true,
-        windowWidth: 1920,
-        dpi: 300,
-        logging: false,
-        removeContainer: true,
-      },
-      jsPDF: {
-        unit: "mm",
-        format: "a4",
-        orientation: "landscape",
-        compress: true,
-        precision: 16,
-        putOnlyUsedFonts: true,
-      },
-      pagebreak: { mode: "avoid-all" },
-    };
-
     setIsGenerating(true);
-
-    html2pdf()
-      .from(element)
-      .set(opt)
-      .save()
-      .then(() => {
-        setIsGenerating(false);
-      })
+    exportToPDF("certificate", `coursera-certificate-${certificate.certId}.pdf`, {
+      html2canvas: { scale: 2 },
+    })
       .catch((error) => {
-        console.error("PDF generation failed:", error);
+        logger.error("PDF generation failed:", error);
+      })
+      .finally(() => {
         setIsGenerating(false);
       });
-  };
-
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    const formatter = new Intl.DateTimeFormat("en-US", {
-      month: "short",
-      day: "numeric",
-      year: "numeric",
-    });
-    return formatter.format(date);
   };
 
   return (
@@ -200,7 +156,7 @@ const CourseraCertificate = () => {
                     </div>
                     <div>
                       <p className="text-sm text-blue-200 mb-1">Completion Date</p>
-                      <p className="text-xl font-semibold">{formatDate(certificate.completionDate)}</p>
+                      <p className="text-xl font-semibold">{formatCertificateDate(certificate.completionDate)}</p>
                     </div>
                     <div>
                       <p className="text-sm text-blue-200 mb-1">Course Length</p>

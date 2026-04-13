@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
-import { GraduationCap, Award, CheckCircle } from "lucide-react";
+import { GraduationCap, Award, CheckCircle, Mail, Bug, FileText, Shield } from "lucide-react";
 import SEO, { seoConfig } from "./SEO";
 
 const Home = () => {
@@ -170,9 +170,39 @@ const Home = () => {
       {/* Footer */}
       <footer className="bg-background border-t border-border py-8 sm:py-12">
         <div className="container mx-auto px-4">
-          <div className="text-center">
-            <p className="text-muted-foreground text-sm sm:text-base">
-              Create professional certificates with HonorInk • Built with modern web technologies
+          <div className="flex flex-col items-center gap-4">
+            <div className="flex flex-wrap justify-center gap-6">
+              <Link 
+                to="/contact" 
+                className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors duration-200 text-sm"
+              >
+                <Mail className="w-4 h-4" />
+                Contact / Support
+              </Link>
+              <Link 
+                to="/contact?type=bug" 
+                className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors duration-200 text-sm"
+              >
+                <Bug className="w-4 h-4" />
+                Report a Bug
+              </Link>
+              <Link 
+                to="/privacy" 
+                className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors duration-200 text-sm"
+              >
+                <Shield className="w-4 h-4" />
+                Privacy Policy
+              </Link>
+              <Link 
+                to="/terms" 
+                className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors duration-200 text-sm"
+              >
+                <FileText className="w-4 h-4" />
+                Terms of Service
+              </Link>
+            </div>
+            <p className="text-muted-foreground text-sm">
+              Create professional certificates with HonorInk
             </p>
           </div>
         </div>

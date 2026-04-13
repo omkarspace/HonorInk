@@ -5,6 +5,8 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { AlertCircle, CheckCircle2 } from "lucide-react";
 import { validateField as validateFieldFn, validateForm as validateFormFn, hasErrors } from "@/lib/validation";
+import { trackFormSubmission, trackCertificateGeneration } from "@/lib/analytics";
+import { logger } from "@/lib/utils";
 
 const CertificateForm = ({ onSubmit, fields, platform }) => {
   const [formData, setFormData] = useState({});
@@ -56,6 +58,7 @@ const CertificateForm = ({ onSubmit, fields, platform }) => {
     setErrors(validationErrors);
 
     if (hasErrors(validationErrors)) {
+      trackFormSubmission(platform, false, 'Validation errors');
       // Scroll to first error
       const firstErrorField = Object.keys(validationErrors)[0];
       const element = document.getElementById(firstErrorField);
@@ -69,8 +72,12 @@ const CertificateForm = ({ onSubmit, fields, platform }) => {
     setIsSubmitting(true);
     try {
       await onSubmit(formData);
+      trackFormSubmission(platform, true);
+      trackCertificateGeneration(platform, true);
     } catch (error) {
-      console.error('Form submission error:', error);
+      logger.error('Form submission error:', error);
+      trackFormSubmission(platform, false, error.message);
+      trackCertificateGeneration(platform, false);
     } finally {
       setIsSubmitting(false);
     }

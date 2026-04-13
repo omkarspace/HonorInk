@@ -12,6 +12,7 @@ const Navbar = () => {
     { to: "/udemy", label: "Udemy" },
     { to: "/linkedin", label: "LinkedIn" },
     { to: "/coursera", label: "Coursera" },
+    { to: "/contact", label: "Contact" },
   ];
 
   const toggleMobileMenu = () => {
