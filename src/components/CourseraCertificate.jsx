@@ -3,8 +3,12 @@ import { Link } from "react-router-dom";
 import { Loader } from "lucide-react";
 import CertificateForm from "./CertificateForm";
 import html2pdf from "html2pdf.js";
+import { generateCertificateId } from "@/lib/utils";
+import { CERTIFICATE_ID_PREFIX } from "@/lib/constants";
+import SEO, { seoConfig } from "./SEO";
 
 const CourseraCertificate = () => {
+  const seo = seoConfig.coursera;
   const [certificate, setCertificate] = useState(null);
   const [isPreview, setIsPreview] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
@@ -48,12 +52,8 @@ const CourseraCertificate = () => {
     },
   ];
 
-  const generateCertificateId = () => {
-    return "CO-" + Math.random().toString(36).substr(2, 9).toUpperCase();
-  };
-
   const handleSubmit = (data) => {
-    const certId = generateCertificateId();
+    const certId = generateCertificateId(CERTIFICATE_ID_PREFIX.COURSERA);
     setCertificate({ ...data, certId });
     setIsPreview(true);
   };
@@ -124,7 +124,9 @@ const CourseraCertificate = () => {
   };
 
   return (
-    <div className="min-h-screen p-6 bg-gradient-to-br from-blue-50 to-indigo-100">
+    <>
+      <SEO {...seo} />
+      <div className="min-h-screen p-6 bg-gradient-to-br from-blue-50 to-indigo-100">
       <Link
         to="/"
         className="fixed top-6 left-6 text-blue-600 hover:text-blue-800 transition duration-300"
@@ -156,58 +158,60 @@ const CourseraCertificate = () => {
           <div className="space-y-8">
             <div
               id="certificate"
-              className="bg-white w-full max-w-[1056px] aspect-w-16 aspect-h-9 mx-auto shadow-lg overflow-hidden border-2 border-blue-200"
+              className="bg-white w-full max-w-[1123px] mx-auto shadow-2xl overflow-hidden relative"
+              style={{ minHeight: "794px", aspectRatio: "1.414" }}
             >
-              <div className="relative h-full bg-gradient-to-br from-blue-600 to-indigo-800">
+              <div className="absolute inset-0 bg-gradient-to-br from-[#004B8D] to-[#1B85D1]">
                 {/* Header */}
-                <div className="flex justify-between items-center p-8 text-white">
-                  <div className="flex items-center space-x-4">
+                <div className="flex justify-between items-center p-8 lg:p-12 text-white">
+                  <div className="flex items-center gap-4">
                     <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center">
-                      <span className="text-blue-600 font-bold text-xl">C</span>
+                      <span className="text-[#004B8D] font-bold text-2xl">C</span>
                     </div>
                     <div>
                       <h1 className="text-2xl font-bold">Coursera</h1>
-                      <p className="text-blue-100">Course Certificate</p>
+                      <p className="text-blue-200">Course Certificate</p>
                     </div>
                   </div>
-                  <div className="text-right text-sm">
-                    <div>Certificate ID: {certificate.certId}</div>
-                    <div>Verification: coursera.org/verify/{certificate.certId}</div>
+                  <div className="text-right">
+                    <p className="text-sm text-blue-200">Certificate ID</p>
+                    <p className="text-lg font-bold">{certificate.certId}</p>
+                    <p className="text-sm text-blue-200 mt-2">coursera.org/verify/{certificate.certId}</p>
                   </div>
                 </div>
 
                 {/* Main Content */}
-                <div className="flex-1 flex flex-col justify-center items-center text-center p-12 text-white">
+                <div className="flex-1 flex flex-col justify-center items-center text-center px-8 py-12 text-white">
                   <div className="mb-8">
-                    <h2 className="text-lg font-light mb-2">This is to certify that</h2>
-                    <h1 className="text-5xl font-bold mb-4">
+                    <h2 className="text-xl font-light mb-4">This is to certify that</h2>
+                    <h1 className="text-5xl lg:text-6xl font-bold mb-6">
                       {certificate.firstName} {certificate.lastName}
                     </h1>
-                    <p className="text-xl font-light mb-6">has successfully completed</p>
-                    <h3 className="text-3xl font-semibold mb-4 max-w-2xl">
+                    <p className="text-2xl font-light mb-8">has successfully completed</p>
+                    <h3 className="text-3xl lg:text-4xl font-semibold mb-8 max-w-3xl">
                       {certificate.courseName}
                     </h3>
                   </div>
 
-                  <div className="flex justify-center space-x-12 text-center">
+                  <div className="flex justify-center gap-12 lg:gap-20 text-center">
                     <div>
-                      <p className="text-sm text-blue-100 mb-1">Instructor</p>
-                      <p className="font-semibold">{certificate.instructor}</p>
+                      <p className="text-sm text-blue-200 mb-1">Instructor</p>
+                      <p className="text-xl font-semibold">{certificate.instructor}</p>
                     </div>
                     <div>
-                      <p className="text-sm text-blue-100 mb-1">Completion Date</p>
-                      <p className="font-semibold">{formatDate(certificate.completionDate)}</p>
+                      <p className="text-sm text-blue-200 mb-1">Completion Date</p>
+                      <p className="text-xl font-semibold">{formatDate(certificate.completionDate)}</p>
                     </div>
                     <div>
-                      <p className="text-sm text-blue-100 mb-1">Course Length</p>
-                      <p className="font-semibold">{certificate.courseLength} weeks</p>
+                      <p className="text-sm text-blue-200 mb-1">Course Length</p>
+                      <p className="text-xl font-semibold">{certificate.courseLength} weeks</p>
                     </div>
                   </div>
                 </div>
 
                 {/* Footer */}
-                <div className="p-8 text-center text-blue-100 text-sm">
-                  <p>This certificate is awarded for the successful completion of the course requirements.</p>
+                <div className="p-8 lg:p-12 text-center text-blue-200 text-sm">
+                  <p className="max-w-2xl mx-auto">This certificate is awarded for the successful completion of the course requirements.</p>
                 </div>
               </div>
             </div>
@@ -246,7 +250,8 @@ const CourseraCertificate = () => {
           </div>
         )}
       </div>
-    </div>
+      </div>
+    </>
   );
 };
 

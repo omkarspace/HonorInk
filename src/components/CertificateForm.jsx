@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { AlertCircle, CheckCircle2 } from "lucide-react";
+import { validateField as validateFieldFn, validateForm as validateFormFn, hasErrors } from "@/lib/validation";
 
 const CertificateForm = ({ onSubmit, fields, platform }) => {
   const [formData, setFormData] = useState({});
@@ -11,84 +12,13 @@ const CertificateForm = ({ onSubmit, fields, platform }) => {
   const [touched, setTouched] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const validateField = (name, value) => {
-    const fieldErrors = {};
+  const validateField = useCallback((name, value) => {
+    return validateFieldFn(name, value);
+  }, []);
 
-    switch (name) {
-      case 'firstName':
-      case 'lastName':
-        if (!value.trim()) {
-          fieldErrors[name] = "This field is required";
-        } else if (value.trim().length < 2) {
-          fieldErrors[name] = "Must be at least 2 characters";
-        } else if (!/^[a-zA-Z\s'-]+$/.test(value.trim())) {
-          fieldErrors[name] = "Only letters, spaces, hyphens, and apostrophes allowed";
-        }
-        break;
-
-      case 'completionDate':
-        if (!value) {
-          fieldErrors[name] = "Completion date is required";
-        } else {
-          const completionDate = new Date(value);
-          const today = new Date();
-          today.setHours(23, 59, 59, 999); // End of today
-          if (completionDate > today) {
-            fieldErrors[name] = "Completion date cannot be in the future";
-          }
-        }
-        break;
-
-      case 'courseLength':
-        if (!value) {
-          fieldErrors[name] = "Course length is required";
-        } else {
-          const numValue = parseFloat(value);
-          if (isNaN(numValue) || numValue <= 0) {
-            fieldErrors[name] = "Must be a positive number";
-          } else if (numValue > 1000) {
-            fieldErrors[name] = "Course length seems too high (max 1000 hours)";
-          }
-        }
-        break;
-
-      case 'courseName':
-        if (!value.trim()) {
-          fieldErrors[name] = "Course name is required";
-        } else if (value.trim().length < 3) {
-          fieldErrors[name] = "Must be at least 3 characters";
-        } else if (value.trim().length > 200) {
-          fieldErrors[name] = "Course name is too long (max 200 characters)";
-        }
-        break;
-
-      case 'instructor':
-        if (!value.trim()) {
-          fieldErrors[name] = "Instructor name is required";
-        } else if (value.trim().length < 2) {
-          fieldErrors[name] = "Must be at least 2 characters";
-        } else if (!/^[a-zA-Z\s'.-]+$/.test(value.trim())) {
-          fieldErrors[name] = "Only letters, spaces, periods, hyphens, and apostrophes allowed";
-        }
-        break;
-
-      default:
-        if (!value.trim()) {
-          fieldErrors[name] = "This field is required";
-        }
-    }
-
-    return fieldErrors;
-  };
-
-  const validateForm = (data) => {
-    const allErrors = {};
-    fields.forEach(field => {
-      const fieldErrors = validateField(field.name, data[field.name] || '');
-      Object.assign(allErrors, fieldErrors);
-    });
-    return allErrors;
-  };
+  const validateForm = useCallback((data) => {
+    return validateFormFn(fields, data);
+  }, [fields]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -125,7 +55,7 @@ const CertificateForm = ({ onSubmit, fields, platform }) => {
     const validationErrors = validateForm(formData);
     setErrors(validationErrors);
 
-    if (Object.keys(validationErrors).length > 0) {
+    if (hasErrors(validationErrors)) {
       // Scroll to first error
       const firstErrorField = Object.keys(validationErrors)[0];
       const element = document.getElementById(firstErrorField);

@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { GraduationCap, Award, CheckCircle } from "lucide-react";
+import SEO, { seoConfig } from "./SEO";
 
 const Home = () => {
+  const seo = seoConfig.home;
   const certificates = [
     {
       to: "/udemy",
@@ -31,7 +33,9 @@ const Home = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <>
+      <SEO {...seo} />
+      <div className="min-h-screen bg-background">
       {/* Hero Section */}
       <div className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-accent/5 to-secondary/5"></div>
@@ -174,6 +178,7 @@ const Home = () => {
         </div>
       </footer>
     </div>
+    </>
   );
 };
 

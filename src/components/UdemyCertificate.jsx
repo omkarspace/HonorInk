@@ -5,8 +5,12 @@ import { Button } from "@/components/ui/button";
 import CertificateForm from "./CertificateForm";
 import html2canvas from "html2canvas";
 import html2pdf from "html2pdf.js";
+import { generateCertificateId } from "@/lib/utils";
+import { CERTIFICATE_ID_PREFIX } from "@/lib/constants";
+import SEO, { seoConfig } from "./SEO";
 
 const UdemyCertificate = () => {
+  const seo = seoConfig.udemy;
   const [certificate, setCertificate] = useState(null);
   const [isPreview, setIsPreview] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
@@ -50,12 +54,8 @@ const UdemyCertificate = () => {
     },
   ];
 
-  const generateCertificateId = () => {
-    return "UC-" + Math.random().toString(36).substr(2, 9).toUpperCase();
-  };
-
   const handleSubmit = (data) => {
-    const certId = generateCertificateId();
+    const certId = generateCertificateId(CERTIFICATE_ID_PREFIX.UDEMY);
     setCertificate({ ...data, certId });
     setIsPreview(true);
   };
@@ -152,7 +152,9 @@ const UdemyCertificate = () => {
   };
 
   return (
-    <div className="min-h-screen p-6 bg-background">
+    <>
+      <SEO {...seo} />
+      <div className="min-h-screen p-6 bg-background">
       <Link
         to="/"
         className="fixed top-6 left-6 text-muted-foreground hover:text-primary transition duration-300"
@@ -186,75 +188,103 @@ const UdemyCertificate = () => {
           <div className="space-y-8">
             <div
               id="certificate"
-              className="bg-[#FBF9FA] w-full max-w-[1056px] aspect-w-16 aspect-h-9 mx-auto shadow-lg  overflow-hidden border border-gray-300"
+              className="bg-white w-full max-w-[1123px] mx-auto shadow-2xl overflow-hidden relative"
+              style={{ minHeight: "794px", aspectRatio: "1.414" }}
             >
-              <div className="relative h-full">
-                {/* Border Pattern */}
-                <div className="absolute inset-0 border-[24px] border-white" />
-                <div className="p-4 sm:p-8 lg:p-12 h-full flex flex-col">
-                  {/* Header */}
-                  <div className="flex justify-between items-start pt-6 px-4 sm:pt-8 sm:px-6 lg:pt-12 lg:px-8 mb-6 sm:mb-8 lg:mb-12">
+              <div className="absolute inset-0 border-[20px] border-white" />
+              <div className="absolute inset-2 border-[3px] border-[#E8E8E8]" />
+              
+              <div className="relative h-full p-12 lg:p-16 flex flex-col">
+                {/* Header */}
+                <div className="flex justify-between items-start mb-8">
+                  <div className="flex items-center gap-6">
                     <img
                       src="/udemy_logo.png"
                       alt="Udemy Logo"
-                      className="h-10 sm:h-12 lg:h-16 w-auto"
+                      className="h-14 w-auto"
                     />
-                    <div className="text-right text-xs sm:text-sm text-[#908E8D] leading-tight">
-                      <div className="mb-1">
-                        Certificate No:{" "}
-                        <span className="font-semibold">
-                          {certificate.certId}
-                        </span>
-                      </div>
-                      <div className="mb-1">
-                        Certificate URL:{" "}
-                        <span className="font-semibold">
-                          ude.my/{certificate.certId}
-                        </span>
-                      </div>
-                      <div>
-                        Reference Number:{" "}
-                        <span className="font-semibold">0004</span>
-                      </div>
+                    <div className="h-12 w-px bg-gray-300" />
+                    <div>
+                      <p className="text-sm text-[#1A1A1A]">Instructor</p>
+                      <p className="text-lg font-bold text-[#1A1A1A]">{certificate.instructor}</p>
                     </div>
                   </div>
-
-                  {/* Certificate Details */}
-                  <div className="flex-grow flex flex-col px-4 sm:px-6 lg:px-8">
-                    <div className="flex-grow">
-                      <h3 className="text-xs sm:text-sm lg:text-base font-bold text-[#6F7681] tracking-wider uppercase mb-2 sm:mb-4 lg:mb-6">
-                        Certificate of Completion
-                      </h3>
-                      <h1 className="certificate-name text-2xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-[#1D1B1C] leading-tight max-w-4xl mb-3 sm:mb-4 lg:mb-6">
-                        {certificate.courseName}
-                      </h1>
-                      <p className="text-xs sm:text-sm lg:text-base text-[#1C181A]">
-                        Instructor:{" "}
-                        <span className="font-bold">
-                          {certificate.instructor}
-                        </span>
-                      </p>
-                    </div>
-
-                    {/* Footer */}
-                    <div className="mt-auto pb-6 sm:pb-8 lg:pb-12">
-                      <h2 className="text-xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold text-[#1C1C1C] mb-2 sm:mb-3 lg:mb-4 xl:mb-6 leading-tight">
-                        {certificate.firstName} {certificate.lastName}
-                      </h2>
-                      <p className="text-xs sm:text-sm lg:text-base text-[#1C1C1C] mb-1 sm:mb-2">
-                        Date:{" "}
-                        <span className="font-semibold">
-                          {formatDate(certificate.completionDate)}
-                        </span>
-                      </p>
-                      <p className="text-xs sm:text-sm lg:text-base text-[#1C1C1C]">
-                        Length:{" "}
-                        <span className="font-semibold">
-                          {certificate.courseLength} total hours
-                        </span>
-                      </p>
-                    </div>
+                  <div className="text-right">
+                    <p className="text-sm text-gray-500 mb-1">Certificate No:</p>
+                    <p className="text-lg font-bold text-[#1A1A1A]">{certificate.certId}</p>
+                    <p className="text-sm text-gray-500 mt-2">ude.my/{certificate.certId}</p>
                   </div>
+                </div>
+
+                {/* Decorative Line */}
+                <div className="w-full h-px bg-gradient-to-r from-transparent via-[#A352F8] to-transparent mb-8" />
+
+                {/* Main Content */}
+                <div className="flex-grow flex flex-col items-center justify-center text-center">
+                  <p className="text-lg tracking-[0.3em] text-gray-500 uppercase mb-4">
+                    Certificate of Completion
+                  </p>
+                  <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold text-[#1A1A1A] leading-tight max-w-4xl mb-8">
+                    {certificate.courseName}
+                  </h1>
+                  <p className="text-xl text-gray-600 max-w-2xl">
+                    This is to certify that
+                  </p>
+                  <h2 className="text-5xl lg:text-6xl font-serif italic text-[#1A1A1A] my-6">
+                    {certificate.firstName} {certificate.lastName}
+                  </h2>
+                  <p className="text-xl text-gray-600 max-w-2xl">
+                    has successfully completed the course
+                  </p>
+                </div>
+
+                {/* Footer */}
+                <div className="flex justify-between items-end mt-8 pt-8 border-t border-gray-200">
+                  <div className="text-center">
+                    <div className="w-48 h-px bg-[#1A1A1A] mb-2" />
+                    <p className="text-sm font-bold text-[#1A1A1A]">{formatDate(certificate.completionDate)}</p>
+                    <p className="text-xs text-gray-500">Date of Completion</p>
+                  </div>
+                  <div className="text-center">
+                    <div className="w-48 h-px bg-[#1A1A1A] mb-2" />
+                    <p className="text-sm font-bold text-[#1A1A1A]">{certificate.courseLength} Hours</p>
+                    <p className="text-xs text-gray-500">Course Length</p>
+                  </div>
+                  <div className="text-center">
+                    <div className="w-48 h-px bg-[#1A1A1A] mb-2" />
+                    <p className="text-sm font-bold text-[#1A1A1A]">ude.my/{certificate.certId}</p>
+                    <p className="text-xs text-gray-500">Verify Certificate</p>
+                  </div>
+                </div>
+
+                {/* Corner Ornaments */}
+                <div className="absolute top-8 left-8 w-16 h-16 opacity-20">
+                  <svg viewBox="0 0 50 50" fill="none" className="w-full h-full">
+                    <path d="M0 25C0 11.193 11.193 0 25 0" stroke="#000" strokeWidth="2"/>
+                    <path d="M0 15C0 6.716 6.716 0 15 0" stroke="#000" strokeWidth="2"/>
+                    <circle cx="25" cy="25" r="3" fill="#000"/>
+                  </svg>
+                </div>
+                <div className="absolute top-8 right-8 w-16 h-16 opacity-20 rotate-90">
+                  <svg viewBox="0 0 50 50" fill="none" className="w-full h-full">
+                    <path d="M0 25C0 11.193 11.193 0 25 0" stroke="#000" strokeWidth="2"/>
+                    <path d="M0 15C0 6.716 6.716 0 15 0" stroke="#000" strokeWidth="2"/>
+                    <circle cx="25" cy="25" r="3" fill="#000"/>
+                  </svg>
+                </div>
+                <div className="absolute bottom-8 left-8 w-16 h-16 opacity-20 -rotate-90">
+                  <svg viewBox="0 0 50 50" fill="none" className="w-full h-full">
+                    <path d="M0 25C0 11.193 11.193 0 25 0" stroke="#000" strokeWidth="2"/>
+                    <path d="M0 15C0 6.716 6.716 0 15 0" stroke="#000" strokeWidth="2"/>
+                    <circle cx="25" cy="25" r="3" fill="#000"/>
+                  </svg>
+                </div>
+                <div className="absolute bottom-8 right-8 w-16 h-16 opacity-20 rotate-180">
+                  <svg viewBox="0 0 50 50" fill="none" className="w-full h-full">
+                    <path d="M0 25C0 11.193 11.193 0 25 0" stroke="#000" strokeWidth="2"/>
+                    <path d="M0 15C0 6.716 6.716 0 15 0" stroke="#000" strokeWidth="2"/>
+                    <circle cx="25" cy="25" r="3" fill="#000"/>
+                  </svg>
                 </div>
               </div>
             </div>
@@ -302,7 +332,8 @@ const UdemyCertificate = () => {
           </div>
         )}
       </div>
-    </div>
+      </div>
+    </>
   );
 };
 

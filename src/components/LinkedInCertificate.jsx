@@ -3,8 +3,12 @@ import { Link } from "react-router-dom";
 import { Loader } from "lucide-react";
 import CertificateForm from "./CertificateForm";
 import html2pdf from "html2pdf.js";
+import { generateCertificateId } from "@/lib/utils";
+import { CERTIFICATE_ID_PREFIX } from "@/lib/constants";
+import SEO, { seoConfig } from "./SEO";
 
 const LinkedInCertificate = () => {
+  const seo = seoConfig.linkedin;
   const [certificate, setCertificate] = useState(null);
   const [isPreview, setIsPreview] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
@@ -54,12 +58,8 @@ const LinkedInCertificate = () => {
     },
   ];
 
-  const generateCertificateId = () => {
-    return "LI-" + Math.random().toString(36).substr(2, 12).toUpperCase();
-  };
-
   const handleSubmit = (data) => {
-    const certId = generateCertificateId();
+    const certId = generateCertificateId(CERTIFICATE_ID_PREFIX.LINKEDIN);
     setCertificate({ ...data, certId });
     setIsPreview(true);
   };
@@ -126,7 +126,9 @@ const LinkedInCertificate = () => {
   };
 
   return (
-    <div className="min-h-screen p-6 bg-gray-100">
+    <>
+      <SEO {...seo} />
+      <div className="min-h-screen p-6 bg-gray-100">
       <Link
         to="/"
         className="fixed top-6 left-6 text-blue-600 hover:text-blue-400 transition duration-300"
@@ -157,51 +159,74 @@ const LinkedInCertificate = () => {
           <div className="space-y-8">
             <div
               id="certificate"
-              className="certificate-container bg-white w-full max-w-[1056px] aspect-w-16 aspect-h-9 mx-auto rounded-lg shadow-lg overflow-hidden"
-              style={{
-                backgroundImage: 'url("/linkedin_background.png")',
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-              }}
+              className="certificate-container bg-white w-full max-w-[1123px] mx-auto shadow-2xl overflow-hidden relative"
+              style={{ minHeight: "794px", aspectRatio: "1.414" }}
             >
-              <div className="inner-white-space bg-white w-full h-full flex items-center justify-center p-6 sm:p-8 lg:p-12">
-                <div className="text-center max-w-4xl">
+              <div className="absolute inset-0" style={{ backgroundImage: 'url("/linkedin_background.png")', backgroundSize: "cover", backgroundPosition: "center" }} />
+              
+              <div className="relative h-full p-12 lg:p-16 flex flex-col" style={{ background: "rgba(255,255,255,0.95)" }}>
+                {/* Header */}
+                <div className="flex justify-between items-start mb-6">
+                  <img
+                    src="/linkedin_sign.png"
+                    alt="LinkedIn"
+                    className="h-12 w-auto"
+                  />
+                  <div className="text-right">
+                    <p className="text-sm font-bold text-[#0A66C2]">Certificate ID</p>
+                    <p className="text-lg text-gray-800">{certificate.certId}</p>
+                  </div>
+                </div>
+
+                {/* Main Content */}
+                <div className="flex-grow flex flex-col items-center justify-center text-center">
                   <img
                     src="/linkedin-learning.png"
                     alt="LinkedIn Learning"
-                    className="h-10 sm:h-12 lg:h-16 mb-4 sm:mb-6 mx-auto"
+                    className="h-16 mb-8 mx-auto"
                   />
-                  <h1 className="certificate-name text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-800 mb-3 sm:mb-4 lg:mb-6 leading-tight">
+                  
+                  <p className="text-lg tracking-[0.2em] text-gray-500 uppercase mb-4">
+                    Certificate of Completion
+                  </p>
+                  
+                  <h1 className="text-4xl lg:text-5xl font-bold text-[#1A1A1A] leading-tight max-w-4xl mb-8">
                     {certificate.courseName}
                   </h1>
-                  <h2 className="text-lg sm:text-xl lg:text-2xl font-light text-gray-600 mb-4 sm:mb-6 lg:mb-8 leading-relaxed px-4 sm:px-6">
-                    This certifies that{" "}
-                    <span className="font-semibold">
-                      {certificate.firstName} {certificate.lastName}
-                    </span>{" "}
-                    has successfully completed the course.
+                  
+                  <p className="text-xl text-gray-600 mb-2">
+                    This certifies that
+                  </p>
+                  <h2 className="text-4xl lg:text-5xl font-serif text-[#1A1A1A] mb-2">
+                    {certificate.firstName} {certificate.lastName}
                   </h2>
-                  <div className="space-y-2 sm:space-y-3 mb-4 sm:mb-6 lg:mb-8">
-                    <p className="text-gray-500 text-base sm:text-lg lg:text-xl">
-                      Completed on:{" "}
-                      <span className="text-gray-700 font-medium">
-                        {formatDate(certificate.completionDate)}
-                      </span>{" "}
-                      at {certificate.courseCompleteTime} UTC
-                    </p>
-                    <p className="text-gray-500 text-base sm:text-lg lg:text-xl">
-                      Duration:{" "}
-                      <span className="text-gray-700 font-medium">
-                        {certificate.courseLength}
-                      </span>
-                    </p>
+                  <p className="text-xl text-gray-600 mb-8">
+                    has successfully completed the course
+                  </p>
+                  
+                  <div className="grid grid-cols-3 gap-8 mt-8 text-center">
+                    <div>
+                      <p className="text-sm text-gray-500">Completed On</p>
+                      <p className="text-lg font-bold text-gray-800">{formatDate(certificate.completionDate)}</p>
+                      <p className="text-sm text-gray-500">{certificate.courseCompleteTime} UTC</p>
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-500">Duration</p>
+                      <p className="text-lg font-bold text-gray-800">{certificate.courseLength}</p>
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-500">Skills Covered</p>
+                      <p className="text-lg font-bold text-gray-800">{certificate.skillCovered}</p>
+                    </div>
                   </div>
-                  <p className="text-gray-600 text-base sm:text-lg lg:text-xl mb-3 sm:mb-4 lg:mb-6 font-medium">
-                    Skills Covered: {certificate.skillCovered}
-                  </p>
-                  <p className="text-gray-400 text-sm sm:text-base lg:text-lg">
-                    Certificate ID: {certificate.certId}
-                  </p>
+                </div>
+
+                {/* Footer */}
+                <div className="mt-auto pt-8 border-t border-gray-200">
+                  <div className="flex justify-center items-center gap-2">
+                    <img src="/linkedin_stamp.png" alt="LinkedIn" className="h-8 w-8" />
+                    <span className="text-gray-500">Learn on LinkedIn</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -240,7 +265,8 @@ const LinkedInCertificate = () => {
           </div>
         )}
       </div>
-    </div>
+      </div>
+    </>
   );
 };
 
